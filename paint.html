@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paint</title>
+  </head>
+  <body>
+    <h1 style="text-align: center;">Welcome to Paint !</h1>
+    <p style="text-align: center;">
+      choose a color with the keys in the keyboard and start painting!
+    </p>
+    <p style="text-align: center;">
+      r for <span style="color : red">red</span> | 
+      g for <span style="color : green">green</span> |
+      b for <span style="color : blue" >blue</span> |
+      y for <span style="color : yellow" >yellow</span> |
+      p for <span style="color : pink" >pink</span> |
+      o for <span style="color : orange" > orange</span> |
+    </p>
+
+    <canvas
+      id="canvas"
+      width="600px"
+      height="600px"
+      style="border: 2px solid; margin-left: 360px;"
+    ></canvas>
+    <script>
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+      let isDrawing = false;
+      let x = 0;
+      let y = 0;
+
+      canvas.addEventListener("mousedown", function(e) {
+        isDrawing = true;
+        x = e.offsetX;
+        y = e.offsetY;
+      });
+
+      canvas.addEventListener("mouseup", function(e) {
+        if (isDrawing === true) {
+          DrawLine(ctx, x, y, e.offsetX, e.offsetY);
+          x = 0;
+          y = 0;
+          isDrawing = false;
+        }
+      });
+      canvas.addEventListener("mousemove", function(e) {
+        if (isDrawing === true) {
+          DrawLine(ctx, x, y, e.offsetX, e.offsetY);
+          x = e.offsetX;
+          y = e.offsetY;
+        }
+      });
+      canvas.addEventListener("keypress", function(e) {
+        ctx.strokeStyle = "red";
+      });
+
+      function DrawLine(ctx, x1, y1, x2, y2) {
+        ctx.beginPath();
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 1;
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.closePath();
+      }
+    </script>
+  </body>
+</html>
